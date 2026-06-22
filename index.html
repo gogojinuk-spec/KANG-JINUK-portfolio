@@ -5,268 +5,174 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KANG JINUK 포트폴리오</title>
   <style>
-    /* 🌌 배경색: 아래(검정)에서 위(은은한 파랑)로 올라가는 그라데이션 */
+    /* 🌌 전체 배경색 */
     body {
       background: linear-gradient(to top, #000000 0%, #0a111a 50%, #1a365d 100%);
       background-attachment: fixed;
       background-size: cover;
       color: white;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding: 40px;
+      padding: 0;
       margin: 0;
       min-height: 100vh;
     }
 
-    /* 상단 프로필 영역 */
-    .header-section {
+    /* 🖼️ 메인 웰컴 비주얼 영역 */
+    .main-intro {
+      position: relative;
+      width: 100%;
+      height: 40vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      margin-bottom: 30px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+      margin-bottom: 40px;
     }
 
-    .header-section h1 {
-      margin: 0 0 10px 0;
-      font-size: 38px;
-      letter-spacing: 2px;
-      text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    /* 🔄 페이드 전환을 위한 듀얼 배경 레이어 */
+    .main-intro-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      filter: brightness(0.25) blur(2px);
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .main-intro-bg.active { opacity: 1; }
+
+    /* 메인 소개 글씨 영역 */
+    .main-intro-text {
+      position: relative;
+      z-index: 2;
+      padding: 20px;
+      text-shadow: 0 4px 15px rgba(0,0,0,0.9);
+    }
+
+    .main-intro-text h1 {
+      margin: 0 0 15px 0;
+      font-size: 42px;
+      letter-spacing: 3px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .main-bio {
+      font-size: 17px;
+      color: #e2e8f0;
+      margin: 0 auto 25px auto;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      line-height: 1.7;
+      max-width: 850px;
+      word-break: keep-all;
+    }
+
+    .main-bio strong {
+      font-size: 20px;
+      color: #a4c2ff;
+      display: inline-block;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
     }
 
     .contact-info {
       color: #b3c6ff;
-      font-size: 16px;
-      margin-bottom: 20px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      font-size: 15px;
+      margin: 0 0 15px 0;
     }
 
-    /* 🚨 모바일 경고 강조 영역 */
-    .main-warning {
-      background-color: rgba(211, 47, 47, 0.85);
-      color: #ffffff;
-      padding: 20px 25px;
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-      border-radius: 16px;
-      max-width: 900px;
-      margin: 0 auto 40px auto;
-      line-height: 1.6;
-      word-break: keep-all;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(5px);
-      border: 1px solid #ff6666;
-    }
-
-    .main-warning span {
-      background-color: #fff;
-      color: #d32f2f;
-      padding: 3px 10px;
-      border-radius: 6px;
+    /* 📌 간결해진 경고 문구 스타일 */
+    .mini-warning {
       display: inline-block;
-      margin: 0 4px;
+      background-color: rgba(211, 47, 47, 0.4);
+      border: 1px solid rgba(255, 102, 102, 0.5);
+      color: #ffd6d6;
+      padding: 6px 16px;
+      font-size: 13px;
+      border-radius: 30px;
+      backdrop-filter: blur(5px);
     }
 
     /* 전체 래퍼 */
     .portfolio-wrapper {
       max-width: 1200px;
       margin: 0 auto;
+      padding: 0 40px 40px 40px;
     }
 
     /* 🔘 가로 버튼 컨테이너 */
-    .button-row {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-bottom: 40px;
-    }
+    .button-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 40px; }
 
-    /* 🔘 귀여운 3D 단추 버튼 공통 스타일 */
-    .cute-btn {
-      padding: 16px 28px;
-      font-size: 16px;
-      font-weight: bold;
-      color: white;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      position: relative;
-      top: 0;
-      transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
-      text-shadow: 0 2px 4px rgba(0,0,0,0.4);
-    }
+    /* 🔘 3D 단추 버튼 스타일 */
+    .cute-btn { padding: 16px 28px; font-size: 16px; font-weight: bold; color: white; border: none; border-radius: 50px; cursor: pointer; position: relative; top: 0; transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+    .cute-btn:hover { filter: brightness(1.1); }
+    .cute-btn.active { top: 6px; filter: brightness(1.1); box-shadow: 0 2px 0 rgba(0,0,0,0.2) !important; }
 
-    .cute-btn:hover {
-      filter: brightness(1.1);
-    }
-
-    /* 클릭 시 버튼이 눌리는 효과 */
-    .cute-btn.active {
-      top: 6px;
-      filter: brightness(1.1);
-    }
-
-    /* 🌈 버튼 색상 그라데이션 (보라색 -> 파란색) */
     .cute-btn-0 { background-color: #a26dda; box-shadow: 0 8px 0 #7b47ab, 0 15px 15px rgba(0,0,0,0.3); }
-    .cute-btn-0.active { box-shadow: 0 2px 0 #7b47ab, 0 5px 5px rgba(0,0,0,0.2); }
-
     .cute-btn-1 { background-color: #8169e6; box-shadow: 0 8px 0 #5a44bd, 0 15px 15px rgba(0,0,0,0.3); }
-    .cute-btn-1.active { box-shadow: 0 2px 0 #5a44bd, 0 5px 5px rgba(0,0,0,0.2); }
-
     .cute-btn-2 { background-color: #6086f0; box-shadow: 0 8px 0 #3c5dbd, 0 15px 15px rgba(0,0,0,0.3); }
-    .cute-btn-2.active { box-shadow: 0 2px 0 #3c5dbd, 0 5px 5px rgba(0,0,0,0.2); }
-
     .cute-btn-3 { background-color: #4ba3f5; box-shadow: 0 8px 0 #2c7dc7, 0 15px 15px rgba(0,0,0,0.3); }
-    .cute-btn-3.active { box-shadow: 0 2px 0 #2c7dc7, 0 5px 5px rgba(0,0,0,0.2); }
-
     .cute-btn-4 { background-color: #38c1fa; box-shadow: 0 8px 0 #1e95c7, 0 15px 15px rgba(0,0,0,0.3); }
-    .cute-btn-4.active { box-shadow: 0 2px 0 #1e95c7, 0 5px 5px rgba(0,0,0,0.2); }
 
-    /* 갤러리 컨테이너 */
-    .gallery-container {
-      display: none;
-      background-color: rgba(20, 20, 25, 0.6);
-      backdrop-filter: blur(10px);
-      padding: 40px;
-      border-radius: 20px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      animation: fadeIn 0.4s ease-in-out;
-    }
+    /* 🌈 각 섹션 소개 커버 영역 */
+    .project-intro { position: relative; width: 100%; height: 350px; display: flex; align-items: center; justify-content: center; text-align: center; margin-bottom: 40px; border-radius: 20px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
+    .intro-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.25) blur(3px); }
+    .intro-text { position: relative; z-index: 2; font-size: 20px; line-height: 1.8; color: #fff; padding: 30px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); word-break: keep-all; }
 
-    .gallery-container.active {
-      display: block;
-    }
+    /* 갤러리 레이아웃 */
+    .gallery-container { display: none; animation: fadeIn 0.4s ease-in-out; }
+    .gallery-container.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
+    .gallery-item { display: flex; flex-direction: column; align-items: center; background-color: rgba(0,0,0,0.4); border-radius: 12px; padding-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); position: relative; }
+    
+    .media-label { position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.75); color: #fff; padding: 4px 8px; border-radius: 6px; font-size: 13px; font-weight: bold; z-index: 10; border: 1px solid rgba(255,255,255,0.2); }
+    .gallery-item img, .gallery-item video { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px 12px 0 0; cursor: pointer; transition: transform 0.3s; }
+    .gallery-item img:hover, .gallery-item video:hover { transform: scale(1.03); }
+    .click-notice { margin-top: 12px; font-size: 13px; color: #9ab; font-weight: bold; }
 
-    /* 갤러리 그리드 */
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 25px;
-    }
-
-    /* 썸네일 Wrapper에 relative 속성 추가 (라벨 위치 고정을 위해) */
-    .gallery-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background-color: rgba(0,0,0,0.4);
-      border-radius: 12px;
-      padding-bottom: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      border: 1px solid rgba(255,255,255,0.05);
-      position: relative;
-    }
-
-    /* 이미지/영상 구분 텍스트 라벨 (썸네일 좌측 상단) */
-    .media-label {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background-color: rgba(0, 0, 0, 0.75);
-      color: #fff;
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: bold;
-      z-index: 10;
-      border: 1px solid rgba(255,255,255,0.2);
-      pointer-events: none;
-    }
-
-    .gallery-item img, .gallery-item video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      aspect-ratio: 4 / 3;
-      border-radius: 12px 12px 0 0;
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-
-    .gallery-item img:hover, .gallery-item video:hover {
-      transform: scale(1.03);
-    }
-
-    .click-notice {
-      margin-top: 12px;
-      font-size: 13px;
-      color: #9ab;
-      font-weight: bold;
-    }
-
-    /* 라이트박스 스타일 */
-    .lightbox {
-      display: none;
-      position: fixed;
-      z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.95);
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* 가로/세로 스크롤 모두 지원하도록 overflow: auto 적용 */
-    #lightbox-content {
-      width: 90%;
-      max-height: 90vh;
-      overflow: auto; 
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
+    /* 라이트박스 팝업 */
+    .lightbox { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; }
+    #lightbox-content { width: 90%; max-height: 90vh; overflow: auto; text-align: center; display: flex; flex-direction: column; align-items: center; }
     #lightbox-content::-webkit-scrollbar { width: 10px; height: 10px; }
     #lightbox-content::-webkit-scrollbar-thumb { background-color: #666; border-radius: 10px; }
-    #lightbox-content::-webkit-scrollbar-corner { background: transparent; }
-
-    /* 라이트박스 내부 미디어 타입 정보 텍스트 */
-    .lightbox-info {
-      color: #fff;
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 15px;
-      padding: 8px 20px;
-      background-color: rgba(0,0,0,0.6);
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.3);
-      letter-spacing: 1px;
-    }
-
-    #lightbox-content img, #lightbox-content video {
-      max-width: 100%;
-      border-radius: 4px;
-      display: inline-block;
-      margin: 0 auto;
-      transition: max-height 0.2s ease;
-    }
-
-    .close { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; z-index: 1000; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-    .arrow { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 50px; cursor: pointer; padding: 15px; user-select: none; z-index: 1000; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-    .arrow.left { left: 20px; }
-    .arrow.right { right: 20px; }
+    .lightbox-info { color: #fff; font-size: 16px; font-weight: bold; margin-bottom: 15px; padding: 8px 20px; background-color: rgba(0,0,0,0.6); border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); letter-spacing: 1px; }
+    #lightbox-content img, #lightbox-content video { max-width: 100%; border-radius: 4px; display: inline-block; margin: 0 auto; }
+    
+    .close { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; z-index: 1000; }
+    .arrow { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 50px; cursor: pointer; padding: 15px; user-select: none; z-index: 1000; }
+    .arrow.left { left: 20px; } .arrow.right { right: 20px; }
   </style>
 </head>
 <body>
 
-  <div class="header-section">
-    <h1>KANG JINUK PORTFOLIO</h1>
-    <p class="contact-info">📞 010-5514-5917 &nbsp;&nbsp;|&nbsp;&nbsp; ✉️ gogojinwook@naver.com</p>
+  <!-- 🖼️ 메인 상단 웰컴 비주얼 (교차 페이드) -->
+  <div class="main-intro">
+    <img id="bg1" src="" class="main-intro-bg active">
+    <img id="bg2" src="" class="main-intro-bg">
+    <div class="main-intro-text">
+      <h1>KANG JINUK PORTFOLIO</h1>
+      <div class="main-bio">
+        <strong>Art Director · Illustrator · AI Creator</strong><br>
+        생성형 AI와 전통 아트를 융합하여 독창적인 비주얼 콘텐츠를 제작합니다.<br>
+        ChatGPT와 Grok을 활용한 스토리 보드,영상콘티 제작, ComfyUI 기반 Stable Diffusion 워크플로우를 통한 이미지 제작, Seedance 2.0을 활용한 애니메이션 및 영상 연출을 수행하며, 수작업 드로잉과 아트 디렉션 역량을 바탕으로 프로젝트 전반의 크리에이티브를 이끌고 있습니다.
+      </div>
+      <p class="contact-info">📞 010-5514-5917 &nbsp;&nbsp;|&nbsp;&nbsp; ✉️ gogojinwook@naver.com</p>
+      <!-- 📌 짧아진 경고 문구 반영 -->
+      <div class="mini-warning">🚨 안내: 고해상도 포트폴리오로 PC 추천. 모바일에서는 로딩 느릴 수 있습니다.</div>
+    </div>
   </div>
 
-  <div class="main-warning">
-    🚨 안내: 본 포트폴리오는 고해상도 작업물이 다수 포함되어 <span>PC 환경에 최적화</span>되어 있습니다.<br>
-    모바일 기기에서는 로딩이 지연되거나 화면이 원활하게 보이지 않을 수 있으니 가급적 데스크톱에서 감상해 주시기 바랍니다.
-  </div>
-
-  <div class="portfolio-wrapper" id="portfolio-wrapper">
+  <div class="portfolio-wrapper">
     <div class="button-row" id="button-row"></div>
     <div id="galleries-wrapper"></div>
   </div>
@@ -282,56 +188,33 @@
     const portfolioData = [
       {
         title: '1. 프로젝트 - 사립 저스티스 마법 학원',
+        description: '이 프로젝트는 외주작업으로서 서브컬처 미소녀 작업물을 작업한 것입니다.<br>제가 AD 역할과 모든 아트 전반을 작업하였으며 동영상과 UI 디자인까지 맡았습니다.<br>이 프로젝트의 중점은 독창적인 서브컬처 세계관입니다.',
         folder: '1_Project _ Rival Schools United by Fate/',
-        files: [
-          /* 새롭게 추가된 영상들을 순서에 맞게 배치했습니다. */
-          "G001.png", "G002.png", "G002_mov1.mp4", "G003.png", "G004.png", 
-          "G005.png", "G005_mov1.mp4", "G006.png", "G006_mov1.mp4", "G007.png", 
-          "G008.png", "G009.png", "G010.mp4", "G010_1.png", "G011.png", 
-          "G012.png", "G013.png", "G014.png", "G014_01.png", "G015.png", 
-          "G016.png", "G017.png", "G018.png", "G019.png"
-        ]
+        files: ["G001.png", "G002.png", "G002_mov1.mp4", "G003.png", "G004.png", "G005.png", "G005_mov1.mp4", "G006.png", "G006_mov1.mp4", "G007.png", "G008.png", "G009.png", "G010.mp4", "G010_1.png", "G011.png", "G012.png", "G013.png", "G014.png", "G014_01.png", "G015.png", "G016.png", "G017.png", "G018.png", "G019.png"]
       },
       {
         title: '2. 프로젝트 - R01',
+        description: '캐주얼 RPG 게임 프로젝트 R01(가제)의 아트 전반을 담당하였습니다.<br>키 비주얼, 캐릭터 디자인, 배경 아트 등 주요 비주얼 에셋을 직접 제작하였으며,<br>프로젝트의 아트 방향성 수립과 비주얼 퀄리티 향상을 주도하였습니다..',
         folder: '2_Project _ R01/',
-        files: [
-          "0001.png", "0002.png", "0003.png", "0004.png", "0005.png", "0006.png", "0007.png", "0008.png",
-          "0009.png", "0010.png", "0011.jpg", "0012.png", "0013.png", "0014.png", "0015.png", "0016.png",
-          "0017.png", "0018.png", "0019.png", "0020.png"
-        ]
+        files: ["0001.png", "0002.png", "0003.png", "0004.png", "0005.png", "0006.png", "0007.png", "0008.png", "0009.png", "0010.png", "0011.jpg", "0012.png", "0013.png", "0014.png", "0015.png", "0016.png", "0017.png", "0018.png", "0019.png", "0020.png"]
       },
       {
         title: '3. 캐주얼 스타일 아트 작업',
+        description: '본 포트폴리오의 작업물은 AI를 사용하지 않고 모두 수작업으로 제작되었습니다.<br>컴투스, 아이덴티티게임즈, 디테일게임즈 등에서 참여한 프로젝트의 아트 작업물을 수록하였으며,<br> 주로 캐주얼 게임 분야의 캐릭터, 배경, UI 디자인 작업으로 구성되어 있습니다.',
         folder: '3_CSUAL ART/',
-        files: [
-          "c001.jpg", "c002.png", "c003.png", "c005.jpg", "c006.jpg", "c007.jpg", "c008.jpg", "c009.png",
-          "c010.jpg", "c011.jpg", "c012.jpg", "c013.jpg", "c014.jpg", "c015.png",
-          "d001.jpg", "d002.jpg", "d003.jpg", "d004.jpg", "d005.jpg", "d006.png", "d007.jpg", "d008.jpg", "d009.jpg", "d010.png",
-          "d011.jpg", "d012.jpg", "d013.jpg", "d014.jpg", "d015.png", "d016.jpg", "d017.png", "d018.jpg", "d019.jpg", "d020.png",
-          "d021.png", "d022.png", "d023.jpg", "d024.png", "d025.png", "d026.png", "d027.jpg", "d028.png", "d029.jpg"
-        ]
+        files: ["c001.jpg", "c002.png", "c003.png", "c005.jpg", "c006.jpg", "c007.jpg", "c008.jpg", "c009.png", "c010.jpg", "c011.jpg", "c012.jpg", "c013.jpg", "c014.jpg", "c015.png", "d001.jpg", "d002.jpg", "d003.jpg", "d004.jpg", "d005.jpg", "d006.png", "d007.jpg", "d008.jpg", "d009.jpg", "d010.png", "d011.jpg", "d012.jpg", "d013.jpg", "d014.jpg", "d015.png", "d016.jpg", "d017.png", "d018.jpg", "d019.jpg", "d020.png", "d021.png", "d022.png", "d023.jpg", "d024.png", "d025.png", "d026.png", "d027.jpg", "d028.png", "d029.jpg"]
       },
       {
         title: '4. 리얼 스타일 아트 작업',
+        description: '깊이감 있는 질감 처리와 정교한 묘사가 돋보이는 고해상도 리얼 아트를 모았습니다.',
         folder: '4_REAL ART/',
-        files: [
-          "K001.jpg", "K002.png", "K003.jpg", "K004.jpg", "K005.jpg", "K006.jpg", "K007.jpg", "K008.jpg",
-          "K009.jpg", "K010.jpg", "K011.jpg", "K012.jpg", "K013.png", "K014.png", "K015.jpg", "K016.jpg",
-          "K017.png", "K018.png", "K019.jpg", "K020.jpg", "K021.png", "K022.png", "K023.png", "K024.png",
-          "K025.png", "K026.jpg", "K027.png"
-        ]
+        files: ["K001.jpg", "K002.png", "K003.jpg", "K004.jpg", "K005.jpg", "K006.jpg", "K007.jpg", "K008.jpg", "K009.jpg", "K010.jpg", "K011.jpg", "K012.jpg", "K013.png", "K014.png", "K015.jpg", "K016.jpg", "K017.png", "K018.png", "K019.jpg", "K020.jpg", "K021.png", "K022.png", "K023.png", "K024.png", "K025.png", "K026.jpg", "K027.png"]
       },
       {
         title: '5. AI 작업',
+        description: '최신 AI 기술을 융합하여 크리에이티브 스펙트럼을 넓힌 실험적 컨셉 아트 모음입니다.',
         folder: '5_AI ART/',
-        files: [
-          "a001.jpg", "a002.jpg", "a003.jpg", "a004.jpg", "a005.jpg", "a006.jpg", "a007.jpg", "a008.jpg",
-          "a009.jpg", "a010.jpg", "a011.jpg", "a012.jpg", "a013.jpg", "a014.jpg", "a015.jpg", "a016.jpg",
-          "a017.jpg", "a018.jpg", "a019.jpg", "a020.jpg", "a021.jpg", "a022.jpg", "a023.jpg", "a024.jpg", "a025.jpg", "a026.jpg",
-          "b001.jpg", "b002.png", "b003.png", "b004.jpg", "b005.jpg", "b006.jpg", "b007.jpg", "b008.png",
-          "b009.png", "b010.jpg", "b012.jpg", "b013.jpg", "b014.jpg", "b015.jpg", "b016.jpg", "b017.jpg", "b018.jpg", "b019.jpg"
-        ]
+        files: ["a001.jpg", "a002.jpg", "a003.jpg", "a004.jpg", "a005.jpg", "a006.jpg", "a007.jpg", "a008.jpg", "a009.jpg", "a010.jpg", "a011.jpg", "a012.jpg", "a013.jpg", "a014.jpg", "a015.jpg", "a016.jpg", "a017.jpg", "a018.jpg", "a019.jpg", "a020.jpg", "a021.jpg", "a022.jpg", "a023.jpg", "a024.jpg", "a025.jpg", "a026.jpg", "b001.jpg", "b002.png", "b003.png", "b004.jpg", "b005.jpg", "b006.jpg", "b007.jpg", "b008.png", "b009.png", "b010.jpg", "b012.jpg", "b013.jpg", "b014.jpg", "b015.jpg", "b016.jpg", "b017.jpg", "b018.jpg", "b019.jpg"]
       }
     ];
 
@@ -343,12 +226,45 @@
     const lightbox = document.getElementById('lightbox');
     const lightboxContent = document.getElementById('lightbox-content');
 
+    const allImages = [];
+    portfolioData.forEach(section => {
+      section.files.forEach(file => {
+        if (!file.endsWith('.mp4')) {
+          allImages.push(section.folder + file);
+        }
+      });
+    });
+
+    if (allImages.length > 0) {
+      const bg1 = document.getElementById('bg1');
+      const bg2 = document.getElementById('bg2');
+      let isBg1Active = true;
+
+      const getRandomImage = () => allImages[Math.floor(Math.random() * allImages.length)];
+
+      bg1.src = getRandomImage();
+      bg2.src = getRandomImage();
+
+      setInterval(() => {
+        if (isBg1Active) {
+          bg1.classList.remove('active');
+          bg2.classList.add('active');
+          isBg1Active = false;
+          setTimeout(() => { bg1.src = getRandomImage(); }, 1000);
+        } else {
+          bg2.classList.remove('active');
+          bg1.classList.add('active');
+          isBg1Active = true;
+          setTimeout(() => { bg2.src = getRandomImage(); }, 1000);
+        }
+      }, 3000);
+    }
+
     function createGalleryItem(src, sectionPaths, localIndex, fileName) {
       const isVideo = src.endsWith('.mp4');
       const wrapper = document.createElement('div');
       wrapper.className = 'gallery-item';
 
-      // 📌 미디어 타입 라벨 추가 (썸네일 좌측 상단)
       const typeLabel = document.createElement('div');
       typeLabel.className = 'media-label';
       typeLabel.innerText = isVideo ? '🎥 [동영상]' : '🖼️ [이미지]';
@@ -356,8 +272,7 @@
 
       const el = document.createElement(isVideo ? 'video' : 'img');
       el.src = src;
-      
-      if (!isVideo) el.alt = "경로 오류: " + fileName; 
+      if (!isVideo) el.alt = "경로 확인 필요: " + fileName; 
       
       if (isVideo) {
         el.muted = true;
@@ -368,14 +283,12 @@
       
       el.onclick = () => openLightbox(sectionPaths, localIndex);
 
-      // 📌 하단 클릭 안내 문구 수정 (영상과 이미지 분리)
       const caption = document.createElement('div');
       caption.className = 'click-notice';
       caption.innerText = isVideo ? '🔍 [영상] 클릭 시 크게 보기' : '🔍 [이미지] 클릭 시 원본 보기';
 
       wrapper.appendChild(el);
       wrapper.appendChild(caption);
-
       return wrapper;
     }
 
@@ -387,12 +300,20 @@
 
       const galleryContainer = document.createElement('div');
       galleryContainer.className = 'gallery-container';
-      
+
+      const intro = document.createElement('div');
+      intro.className = 'project-intro';
+      intro.innerHTML = `
+        <img src="${section.folder + section.files[0]}" class="intro-bg">
+        <div class="intro-text">${section.description}</div>
+      `;
+      galleryContainer.appendChild(intro);
+
       const galleryGrid = document.createElement('div');
       galleryGrid.className = 'gallery';
       galleryContainer.appendChild(galleryGrid);
 
-      const sectionPaths = section.files.map(fileName => section.folder + fileName);
+      const sectionPaths = section.files.map(f => section.folder + f);
       section.files.forEach((fileName, localIndex) => {
         const fullPath = section.folder + fileName;
         const itemElement = createGalleryItem(fullPath, sectionPaths, localIndex, fileName);
@@ -403,7 +324,6 @@
 
       btn.onclick = () => {
         const isCurrentlyActive = galleryContainer.classList.contains('active');
-
         document.querySelectorAll('.cute-btn').forEach(b => b.classList.remove('active'));
         document.querySelectorAll('.gallery-container').forEach(g => g.classList.remove('active'));
 
@@ -424,15 +344,14 @@
     function updateLightbox() {
       lightboxContent.innerHTML = '';
       lightboxContent.scrollTop = 0;
-      lightboxContent.scrollLeft = 0; // 가로 스크롤도 초기화
+      lightboxContent.scrollLeft = 0;
 
       const src = currentGallery[currentIndex];
       const isVideo = src.endsWith('.mp4');
 
-      // 📌 라이트박스 내부 미디어 정보 텍스트 추가 (상단)
       const infoText = document.createElement('div');
       infoText.className = 'lightbox-info';
-      infoText.innerText = isVideo ? '🎥 현재 파일: [동영상]' : '🖼️ 현재 파일: [이미지]';
+      infoText.innerText = isVideo ? '🎥 현재 미디어 타입: [동영상]' : '🖼️ 현재 미디어 타입: [이미지]';
       lightboxContent.appendChild(infoText);
 
       const el = document.createElement(isVideo ? 'video' : 'img');
@@ -444,7 +363,6 @@
         el.style.maxHeight = '85vh';
       } else {
         el.style.cursor = 'zoom-in'; 
-        
         el.onload = function() {
           const ratio = this.naturalHeight / this.naturalWidth;
           if (ratio >= 5) {
@@ -456,7 +374,6 @@
             
             this.onclick = function(e) {
               e.stopPropagation(); 
-              
               if (this.style.maxHeight === 'none') {
                 this.style.maxHeight = '85vh';
                 this.style.cursor = 'zoom-in';
@@ -483,12 +400,10 @@
       lightboxContent.innerHTML = '';
     }
 
-    // 라이트박스의 검은 배경 영역을 클릭하면 닫히도록 설정
     lightbox.addEventListener('click', function(e) {
       if (e.target === lightbox || e.target === lightboxContent) closeLightbox();
     });
 
-    // 키보드 방향키 및 ESC 동작
     document.addEventListener('keydown', function(e) {
       if (lightbox.style.display === 'flex') {
         if (e.key === "ArrowLeft") changeMedia(-1);
