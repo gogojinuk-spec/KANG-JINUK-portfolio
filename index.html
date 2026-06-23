@@ -32,7 +32,6 @@
       margin-bottom: 40px;
     }
 
-    /* 🔄 페이드 전환을 위한 듀얼 배경 레이어 */
     .main-intro-bg {
       position: absolute;
       top: 0;
@@ -45,73 +44,17 @@
       opacity: 0;
       transition: opacity 1s ease-in-out;
     }
-
     .main-intro-bg.active { opacity: 1; }
 
-    /* 메인 소개 글씨 영역 */
-    .main-intro-text {
-      position: relative;
-      z-index: 2;
-      padding: 20px;
-      text-shadow: 0 4px 15px rgba(0,0,0,0.9);
-    }
+    .main-intro-text { position: relative; z-index: 2; padding: 20px; text-shadow: 0 4px 15px rgba(0,0,0,0.9); }
+    .main-intro-text h1 { margin: 0 0 15px 0; font-size: 42px; letter-spacing: 3px; font-weight: 800; color: #ffffff; }
+    .main-bio { font-size: 17px; color: #e2e8f0; margin: 0 auto 25px auto; font-weight: 400; letter-spacing: 0.5px; line-height: 1.7; max-width: 850px; word-break: keep-all; }
+    .main-bio strong { font-size: 20px; color: #a4c2ff; display: inline-block; margin-bottom: 10px; letter-spacing: 1px; }
+    .contact-info { color: #b3c6ff; font-size: 15px; margin: 0 0 15px 0; }
+    .mini-warning { display: inline-block; background-color: rgba(211, 47, 47, 0.4); border: 1px solid rgba(255, 102, 102, 0.5); color: #ffd6d6; padding: 6px 16px; font-size: 13px; border-radius: 30px; backdrop-filter: blur(5px); }
 
-    .main-intro-text h1 {
-      margin: 0 0 15px 0;
-      font-size: 42px;
-      letter-spacing: 3px;
-      font-weight: 800;
-      color: #ffffff;
-    }
-
-    .main-bio {
-      font-size: 17px;
-      color: #e2e8f0;
-      margin: 0 auto 25px auto;
-      font-weight: 400;
-      letter-spacing: 0.5px;
-      line-height: 1.7;
-      max-width: 850px;
-      word-break: keep-all;
-    }
-
-    .main-bio strong {
-      font-size: 20px;
-      color: #a4c2ff;
-      display: inline-block;
-      margin-bottom: 10px;
-      letter-spacing: 1px;
-    }
-
-    .contact-info {
-      color: #b3c6ff;
-      font-size: 15px;
-      margin: 0 0 15px 0;
-    }
-
-    /* 경고 문구 스타일 */
-    .mini-warning {
-      display: inline-block;
-      background-color: rgba(211, 47, 47, 0.4);
-      border: 1px solid rgba(255, 102, 102, 0.5);
-      color: #ffd6d6;
-      padding: 6px 16px;
-      font-size: 13px;
-      border-radius: 30px;
-      backdrop-filter: blur(5px);
-    }
-
-    /* 전체 래퍼 */
-    .portfolio-wrapper {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 40px 40px 40px;
-    }
-
-    /* 🔘 가로 버튼 컨테이너 */
+    .portfolio-wrapper { max-width: 1200px; margin: 0 auto; padding: 0 40px 40px 40px; }
     .button-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 40px; }
-
-    /* 🔘 3D 단추 버튼 스타일 */
     .cute-btn { padding: 16px 28px; font-size: 16px; font-weight: bold; color: white; border: none; border-radius: 50px; cursor: pointer; position: relative; top: 0; transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
     .cute-btn:hover { filter: brightness(1.1); }
     .cute-btn.active { top: 6px; filter: brightness(1.1); box-shadow: 0 2px 0 rgba(0,0,0,0.2) !important; }
@@ -122,33 +65,26 @@
     .cute-btn-3 { background-color: #4ba3f5; box-shadow: 0 8px 0 #2c7dc7, 0 15px 15px rgba(0,0,0,0.3); }
     .cute-btn-4 { background-color: #38c1fa; box-shadow: 0 8px 0 #1e95c7, 0 15px 15px rgba(0,0,0,0.3); }
 
-    /* 🌈 각 섹션 소개 커버 영역 */
     .project-intro { position: relative; width: 100%; height: 350px; display: flex; align-items: center; justify-content: center; text-align: center; margin-bottom: 40px; border-radius: 20px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.4); }
     .intro-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.25) blur(3px); }
     .intro-text { position: relative; z-index: 2; font-size: 20px; line-height: 1.8; color: #fff; padding: 30px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); word-break: keep-all; }
 
-    /* 갤러리 레이아웃 */
     .gallery-container { display: none; animation: fadeIn 0.4s ease-in-out; }
     .gallery-container.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
     .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
     .gallery-item { display: flex; flex-direction: column; align-items: center; background-color: rgba(0,0,0,0.4); border-radius: 12px; padding-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); position: relative; }
-    
     .media-label { position: absolute; top: 10px; left: 10px; background-color: rgba(0, 0, 0, 0.75); color: #fff; padding: 4px 8px; border-radius: 6px; font-size: 13px; font-weight: bold; z-index: 10; border: 1px solid rgba(255,255,255,0.2); }
     .gallery-item img, .gallery-item video { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px 12px 0 0; cursor: pointer; transition: transform 0.3s; }
     .gallery-item img:hover, .gallery-item video:hover { transform: scale(1.03); }
     .click-notice { margin-top: 12px; font-size: 13px; color: #9ab; font-weight: bold; }
 
-    /* 라이트박스 팝업 */
     .lightbox { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; }
-    #lightbox-content { width: 90%; max-height: 90vh; overflow: auto; text-align: center; display: flex; flex-direction: column; align-items: center; }
+    #lightbox-content { width: 90%; max-height: 90vh; overflow: auto; text-align: center; display: flex; flex-direction: column; align-items: center; padding-top: 20px; }
     #lightbox-content::-webkit-scrollbar { width: 10px; height: 10px; }
     #lightbox-content::-webkit-scrollbar-thumb { background-color: #666; border-radius: 10px; }
-    .lightbox-info { color: #fff; font-size: 16px; font-weight: bold; margin-bottom: 15px; padding: 8px 20px; background-color: rgba(0,0,0,0.6); border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); letter-spacing: 1px; }
-    
-    /* 📌 라이트박스 내 이미지 기본 설정 */
-    #lightbox-content img, #lightbox-content video { max-width: 100%; border-radius: 4px; display: inline-block; margin: 0 auto; user-select: none; -webkit-user-drag: none; }
+    .lightbox-info { color: #fff; font-size: 16px; font-weight: bold; margin-bottom: 15px; padding: 8px 20px; background-color: rgba(0,0,0,0.6); border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); letter-spacing: 1px; flex-shrink: 0; }
     
     .close { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; z-index: 1000; }
     .arrow { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 50px; cursor: pointer; padding: 15px; user-select: none; z-index: 1000; }
@@ -157,7 +93,6 @@
 </head>
 <body>
 
-  <!-- 🖼️ 메인 상단 웰컴 비주얼 (교차 페이드) -->
   <div class="main-intro">
     <img id="bg1" src="" class="main-intro-bg active">
     <img id="bg2" src="" class="main-intro-bg">
@@ -189,81 +124,60 @@
     const portfolioData = [
       {
         title: '1. 프로젝트 - 사립 저스티스 마법 학원',
-        description: '이 프로젝트는 외주작업으로서 서브컬처 미소녀 작업물을 작업한 것입니다.<br>제가 AD 역할과 모든 아트 전반을 작업하였으며 동영상과 UI 디자인까지 맡았습니다.<br>이 프로젝트의 중점은 독창적인 서브컬처 세계관입니다.',
+        description: '이 프로젝트는 외주작업으로서 서브컬처 미소녀 작업물을 작업한 것입니다.<br>제가 AD 역할과 모든 아트 전반을 작업하였으며 동영상과 UI 디자인까지 맡았습니다.',
         folder: '1_Project _ Rival Schools United by Fate/',
-        // 📌 여기서 이미지에 보이는 정확한 순서대로 파일 리스트가 업데이트되었습니다.
-        files: [
-          "G001.png", "G002.png", "G002_mov1.mp4", "G002_mov2.png", "G003.png", "G004.png", 
-          "G005.png", "G005_mov1.mp4", "G006.png", "g006_1.png", "G006_mov1.mp4", "G006_mov2.png",
-          "G007.png", "G009.png", "G010.mp4", "G010_1.png", "G011.png", "G012.png", "G013.png", 
-          "G014.png", "G014_01.png", "G015.png", "G016.png", "G017.png", "G018.png", "G019.png"
-        ]
+        files: ["G000.jpg", "G001.jpg", "G002.jpg", "G003.mp4", "G004.jpg", "G005.jpg", "G006.jpg", "G007.jpg", "G008.mp4", "G009.jpg", "G010.mp4", "G011.jpg", "G012.jpg", "G013.jpg", "G014.jpg", "G015.jpg", "G016.jpg", "G017.jpg", "G018.jpg", "G019.jpg", "G020.jpg", "g021.jpg", "G022.jpg", "G023.jpg"]
       },
       {
         title: '2. 프로젝트 - R01',
         description: '프로젝트 R01의 아트웍 및 컨셉 디자인 파트 가이드라인 작업물 아카이브입니다.',
         folder: '2_Project _ R01/',
-        files: ["0001.png", "0002.png", "0003.png", "0004.png", "0005.png", "0006.png", "0007.png", "0008.png", "0009.png", "0010.png", "0011.jpg", "0012.png", "0013.png", "0014.png", "0015.png", "0016.png", "0017.png", "0018.png", "0019.png", "0020.png"]
+        files: ["001.jpg", "002.jpg", "003.jpg", "004.jpg", "005.jpg", "006.jpg", "007.jpg", "008.jpg", "009.jpg", "010.jpg", "011.jpg", "012.jpg", "013.jpg", "014.jpg", "015.jpg", "016.jpg", "017.jpg", "018.jpg", "로비리본.jpg"]
       },
-      {
-        title: '3. 캐주얼 스타일 아트 작업',
-        description: '캐주얼 작업물. 본 포트폴리오는 AI 생성물 없이 제작된 순수 수작업 작품들로 구성되어 있습니다.',
-        folder: '3_CSUAL ART/',
-        files: ["c001.jpg", "c002.png", "c003.png", "c005.jpg", "c006.jpg", "c007.jpg", "c008.jpg", "c009.png", "c010.jpg", "c011.jpg", "c012.jpg", "c013.jpg", "c014.jpg", "c015.png", "d001.jpg", "d002.jpg", "d003.jpg", "d004.jpg", "d005.jpg", "d006.png", "d007.jpg", "d008.jpg", "d009.jpg", "d010.png", "d011.jpg", "d012.jpg", "d013.jpg", "d014.jpg", "d015.png", "d016.jpg", "d017.png", "d018.jpg", "d019.jpg", "d020.png", "d021.png", "d022.png", "d023.jpg", "d024.png", "d025.png", "d026.png", "d027.jpg", "d028.png", "d029.jpg"]
-      },
-      {
-        title: '4. 리얼 스타일 아트 작업',
-        description: '리얼 아트를: 본 포트폴리오는 AI 생성물 없이 제작된 순수 수작업 작품들로 구성되어 있습니다.',
-        folder: '4_REAL ART/',
-        files: ["K001.jpg", "K002.png", "K003.jpg", "K004.jpg", "K005.jpg", "K006.jpg", "K007.jpg", "K008.jpg", "K009.jpg", "K010.jpg", "K011.jpg", "K012.jpg", "K013.png", "K014.png", "K015.jpg", "K016.jpg", "K017.png", "K018.png", "K019.jpg", "K020.jpg", "K021.png", "K022.png", "K023.png", "K024.png", "K025.png", "K026.jpg", "K027.png"]
-      },
-      {
-        title: '5. AI 작업',
-        description: '최신 AI 기술을 융합하여 크리에이티브 스펙트럼을 넓힌 실험적 컨셉 아트 모음입니다.',
-        folder: '5_AI ART/',
-        files: ["a001.jpg", "a002.jpg", "a003.jpg", "a004.jpg", "a005.jpg", "a006.jpg", "a007.jpg", "a008.jpg", "a009.jpg", "a010.jpg", "a011.jpg", "a012.jpg", "a013.jpg", "a014.jpg", "a015.jpg", "a016.jpg", "a017.jpg", "a018.jpg", "a019.jpg", "a020.jpg", "a021.jpg", "a022.jpg", "a023.jpg", "a024.jpg", "a025.jpg", "a026.jpg", "b001.jpg", "b002.png", "b003.png", "b004.jpg", "b005.jpg", "b006.jpg", "b007.jpg", "b008.png", "b009.png", "b010.jpg", "b012.jpg", "b013.jpg", "b014.jpg", "b015.jpg", "b016.jpg", "b017.jpg", "b018.jpg", "b019.jpg"]
-      }
+      { title: '3. 캐주얼 스타일 아트 작업', description: '순수 수작업 캐주얼 아트워크.', folder: '3_CSUAL ART/', files: ["c001.jpg", "c002.png", "c003.png", "c005.jpg", "c006.jpg", "c007.jpg", "c008.jpg", "c009.png", "c010.jpg", "c011.jpg", "c012.jpg", "c013.jpg", "c014.jpg", "c015.png", "d001.jpg", "d002.jpg", "d003.jpg", "d004.jpg", "d005.jpg", "d006.png", "d007.jpg", "d008.jpg", "d009.jpg", "d010.png", "d011.jpg", "d012.jpg", "d013.jpg", "d014.jpg", "d015.png", "d016.jpg", "d017.png", "d018.jpg", "d019.jpg", "d020.png", "d021.png", "d022.png", "d023.jpg", "d024.png", "d025.png", "d026.png", "d027.jpg", "d028.png", "d029.jpg"] },
+      { title: '4. 리얼 스타일 아트 작업', description: '순수 수작업 리얼 스타일 아트워크.', folder: '4_REAL ART/', files: ["K001.jpg", "K002.jpg", "K003.jpg", "K004.jpg", "K005.jpg", "K006.jpg", "K007.jpg", "K008.jpg", "K009.jpg", "K010.jpg", "K011.jpg", "K012.jpg", "K013.png", "K014.png", "K015.jpg", "K016.jpg", "K017.png", "K018.png", "K019.jpg", "K020.jpg", "K021.png", "K022.png", "K023.png", "K024.png", "K025.png", "K026.jpg", "K027.png"] },
+      { title: '5. AI 작업', description: 'AI 기반 실험적 컨셉 아트 모음.', folder: '5_AI ART/', files: ["a001.jpg", "a002.jpg", "a003.jpg", "a004.jpg", "a005.jpg", "a006.jpg", "a007.jpg", "a008.jpg", "a009.jpg", "a010.jpg", "a011.jpg", "a012.jpg", "a013.jpg", "a014.jpg", "a015.jpg", "a016.jpg", "a017.jpg", "a018.jpg", "a019.jpg", "a020.jpg", "a021.jpg", "a022.jpg", "a023.jpg", "a024.jpg", "a025.jpg", "a026.jpg", "b001.jpg", "b002.png", "b003.png", "b004.jpg", "b005.jpg", "b006.jpg", "b007.jpg", "b008.png", "b009.png", "b010.jpg", "b012.jpg", "b013.jpg", "b014.jpg", "b015.jpg", "b016.jpg", "b017.jpg", "b018.jpg", "b019.jpg"] }
     ];
 
     const buttonRow = document.getElementById('button-row');
     const galleriesWrapper = document.getElementById('galleries-wrapper');
-    let currentGallery = [];
-    let currentIndex = 0;
     const lightbox = document.getElementById('lightbox');
     const lightboxContent = document.getElementById('lightbox-content');
-
-    // 📌 마우스 드래그로 화면 위아래 스크롤하기
+    
+    // 글로벌 변수 복구
+    let currentGallery = [];
+    let currentIndex = 0;
+    
+    // 스크롤 드래그 관련 변수
     let isDown = false;
     let startY;
     let scrollTop;
     let isDragged = false;
 
+    // 드래그 기능
     lightboxContent.addEventListener('mousedown', (e) => {
-      if(e.target.tagName === 'IMG') e.preventDefault(); 
+      if(e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') e.preventDefault(); 
       isDown = true;
       isDragged = false;
       startY = e.clientY;
       scrollTop = lightboxContent.scrollTop;
     });
-
     lightboxContent.addEventListener('mouseleave', () => { isDown = false; });
     lightboxContent.addEventListener('mouseup', () => { isDown = false; });
-
     lightboxContent.addEventListener('mousemove', (e) => {
       if (!isDown) return;
-      const y = e.clientY;
-      const walk = (y - startY);
+      const walk = (e.clientY - startY);
       if (Math.abs(walk) > 3) { 
         isDragged = true;
         lightboxContent.scrollTop = scrollTop - walk;
       }
     });
 
-    // 메인 배경화면 랜덤 슬라이드
+    // 슬라이드쇼용 이미지 리스트
     const allImages = [];
     portfolioData.forEach(section => {
       section.files.forEach(file => {
-        if (!file.endsWith('.mp4')) allImages.push(section.folder + file);
+        if (!file.toLowerCase().endsWith('.mp4')) allImages.push(section.folder + file);
       });
     });
 
@@ -274,171 +188,103 @@
       const getRandomImage = () => allImages[Math.floor(Math.random() * allImages.length)];
       bg1.src = getRandomImage();
       bg2.src = getRandomImage();
-
       setInterval(() => {
-        if (isBg1Active) {
-          bg1.classList.remove('active');
-          bg2.classList.add('active');
-          isBg1Active = false;
-          setTimeout(() => { bg1.src = getRandomImage(); }, 1000);
-        } else {
-          bg2.classList.remove('active');
-          bg1.classList.add('active');
-          isBg1Active = true;
-          setTimeout(() => { bg2.src = getRandomImage(); }, 1000);
-        }
+        if (isBg1Active) { bg1.classList.remove('active'); bg2.classList.add('active'); isBg1Active = false; setTimeout(() => { bg1.src = getRandomImage(); }, 1000); }
+        else { bg2.classList.remove('active'); bg1.classList.add('active'); isBg1Active = true; setTimeout(() => { bg2.src = getRandomImage(); }, 1000); }
       }, 3000);
     }
 
-    function createGalleryItem(src, sectionPaths, localIndex, fileName) {
-      const isVideo = src.endsWith('.mp4');
-      const wrapper = document.createElement('div');
-      wrapper.className = 'gallery-item';
-
-      const typeLabel = document.createElement('div');
-      typeLabel.className = 'media-label';
-      typeLabel.innerText = isVideo ? '🎥 [동영상]' : '🖼️ [이미지]';
-      wrapper.appendChild(typeLabel);
-
-      const el = document.createElement(isVideo ? 'video' : 'img');
-      el.src = src;
-      if (!isVideo) el.alt = "경로 확인 필요: " + fileName; 
-      
-      if (isVideo) {
-        el.muted = true;
-        el.loop = true;
-        el.onmouseover = () => el.play();
-        el.onmouseout = () => { el.pause(); el.currentTime = 0; };
-      }
-      
-      el.onclick = () => openLightbox(sectionPaths, localIndex);
-
-      const caption = document.createElement('div');
-      caption.className = 'click-notice';
-      caption.innerText = isVideo ? '🔍 [영상] 클릭 시 크게 보기' : '🔍 [이미지] 클릭 시 원본 보기';
-
-      wrapper.appendChild(el);
-      wrapper.appendChild(caption);
-      return wrapper;
-    }
-
-    portfolioData.forEach((section, index) => {
-      const btn = document.createElement('button');
-      btn.className = `cute-btn cute-btn-${index}`;
-      btn.innerText = section.title;
-      buttonRow.appendChild(btn);
-
-      const galleryContainer = document.createElement('div');
-      galleryContainer.className = 'gallery-container';
-
-      const intro = document.createElement('div');
-      intro.className = 'project-intro';
-      intro.innerHTML = `
-        <img src="${section.folder + section.files[0]}" class="intro-bg">
-        <div class="intro-text">${section.description}</div>
-      `;
-      galleryContainer.appendChild(intro);
-
-      const galleryGrid = document.createElement('div');
-      galleryGrid.className = 'gallery';
-      galleryContainer.appendChild(galleryGrid);
-
-      const sectionPaths = section.files.map(f => section.folder + f);
-      section.files.forEach((fileName, localIndex) => {
-        const fullPath = section.folder + fileName;
-        const itemElement = createGalleryItem(fullPath, sectionPaths, localIndex, fileName);
-        galleryGrid.appendChild(itemElement);
-      });
-
-      galleriesWrapper.appendChild(galleryContainer);
-
-      btn.onclick = () => {
-        const isCurrentlyActive = galleryContainer.classList.contains('active');
-        document.querySelectorAll('.cute-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.gallery-container').forEach(g => g.classList.remove('active'));
-
-        if (!isCurrentlyActive) {
-          btn.classList.add('active');
-          galleryContainer.classList.add('active');
-        }
-      };
+    portfolioData.forEach((s, i) => {
+        const btn = document.createElement('button'); btn.className = `cute-btn cute-btn-${i}`; btn.innerText = s.title; buttonRow.appendChild(btn);
+        const gc = document.createElement('div'); gc.className = 'gallery-container';
+        gc.innerHTML = `<div class="project-intro"><img src="${s.folder + s.files[0]}" class="intro-bg"><div class="intro-text">${s.description}</div></div><div class="gallery"></div>`;
+        const grid = gc.querySelector('.gallery');
+        
+        s.files.forEach((f, idx) => {
+            const item = document.createElement('div'); item.className = 'gallery-item';
+            const isVid = f.toLowerCase().endsWith('.mp4');
+            
+            // 📌 오류 수정: 동영상(<video>) 태그에도 onclick 이벤트를 추가하고 마우스 커서 설정을 넣었습니다.
+            item.innerHTML = `
+              <div class="media-label">${isVid ? '🎥 [동영상]' : '🖼️ [이미지]'}</div>
+              ${isVid ? `<video src="${s.folder+f}" muted loop style="cursor: pointer;" onclick="openLightbox(${JSON.stringify(s.files.map(x=>s.folder+x)).replace(/"/g,"'")}, ${idx})" onmouseover="this.play().catch(e=>{})" onmouseout="this.pause();this.currentTime=0;"></video>` 
+                      : `<img src="${s.folder+f}" onclick="openLightbox(${JSON.stringify(s.files.map(x=>s.folder+x)).replace(/"/g,"'")}, ${idx})">`}
+              <div class="click-notice">${isVid ? '🔍 [영상] 클릭 시 크게 보기' : '🔍 [이미지] 클릭 시 원본 보기'}</div>
+            `;
+            grid.appendChild(item);
+        });
+        galleriesWrapper.appendChild(gc);
+        btn.onclick = () => { document.querySelectorAll('.cute-btn').forEach(b=>b.classList.remove('active')); document.querySelectorAll('.gallery-container').forEach(g=>g.classList.remove('active')); btn.classList.add('active'); gc.classList.add('active'); };
     });
 
-    function openLightbox(sectionPaths, index) {
-      currentGallery = sectionPaths;
-      currentIndex = index;
-      lightbox.style.display = 'flex';
-      updateLightbox();
+    // 📌 라이트박스 열기 및 업데이트 함수 (이미지 확대 버그 및 동영상 재생 오류 완벽 수정)
+    function openLightbox(paths, index) { 
+      currentGallery = paths; 
+      currentIndex = index; 
+      lightbox.style.display = 'flex'; 
+      updateLightbox(); 
     }
 
     function updateLightbox() {
       lightboxContent.innerHTML = '';
       lightboxContent.scrollTop = 0;
       lightboxContent.scrollLeft = 0;
+      lightboxContent.style.alignItems = 'center'; 
 
       const src = currentGallery[currentIndex];
-      const isVideo = src.endsWith('.mp4');
+      const isVideo = src.toLowerCase().endsWith('.mp4');
 
       const infoText = document.createElement('div');
       infoText.className = 'lightbox-info';
-      infoText.innerText = isVideo ? '🎥 현재 미디어 타입: [동영상]' : '🖼️ 현재 미디어 타입: [이미지]';
+      infoText.innerText = isVideo ? '🎥 [동영상]' : '🖼️ [이미지]';
       lightboxContent.appendChild(infoText);
 
-      const el = document.createElement(isVideo ? 'video' : 'img');
-      el.src = src;
-      
-      if (isVideo) {
-        el.controls = true;
-        el.autoplay = true;
-        el.style.maxHeight = '85vh';
+      if(isVideo) {
+        const video = document.createElement('video');
+        video.src = src;
+        video.controls = true;
+        video.autoplay = true;
+        video.style.maxHeight = '85vh';
+        video.style.maxWidth = '100%';
+        lightboxContent.appendChild(video);
       } else {
-        el.onload = function() {
-          const ratio = this.naturalHeight / this.naturalWidth;
-          
-          if (ratio >= 2 || src.includes('g006_1.png')) {
-            this.style.maxHeight = 'none';
-            this.style.cursor = 'grab';
-            
-            this.onmousedown = () => this.style.cursor = 'grabbing';
-            this.onmouseup = () => this.style.cursor = 'grab';
-            this.onmouseleave = () => this.style.cursor = 'grab';
-            
-            this.onclick = function(e) {
-              e.stopPropagation();
-            };
-          } else {
+        const img = document.createElement('img');
+        img.src = src;
+        img.style.userSelect = 'none';
+        
+        img.style.maxHeight = '85vh';
+        img.style.maxWidth = '100%';
+        img.style.cursor = 'zoom-in';
+        img.style.transition = 'all 0.2s ease-in-out';
+
+        img.onclick = function(e) {
+          e.stopPropagation(); 
+          if (isDragged) { isDragged = false; return; }
+
+          if (this.style.maxHeight === 'none') {
             this.style.maxHeight = '85vh';
-            this.style.objectFit = 'contain';
+            this.style.maxWidth = '100%';
             this.style.cursor = 'zoom-in';
-            
-            this.onclick = function(e) {
-              e.stopPropagation();
-              if (isDragged) { isDragged = false; return; }
-              
-              if (this.style.maxHeight === 'none') {
-                this.style.maxHeight = '85vh';
-                this.style.cursor = 'zoom-in';
-              } else {
-                this.style.maxHeight = 'none';
-                this.style.cursor = 'zoom-out'; 
-              }
-            };
+            lightboxContent.style.alignItems = 'center'; 
+          } else {
+            this.style.maxHeight = 'none';
+            this.style.maxWidth = 'none'; 
+            this.style.cursor = 'zoom-out';
+            lightboxContent.style.alignItems = 'flex-start'; 
           }
         };
+        lightboxContent.appendChild(img);
       }
-      lightboxContent.appendChild(el);
     }
 
-    function changeMedia(direction) {
-      currentIndex += direction;
-      if (currentIndex < 0) currentIndex = currentGallery.length - 1;
-      if (currentIndex >= currentGallery.length) currentIndex = 0;
-      updateLightbox();
+    function changeMedia(dir) { 
+      currentIndex = (currentIndex + dir + currentGallery.length) % currentGallery.length; 
+      updateLightbox(); 
     }
 
-    function closeLightbox() {
-      lightbox.style.display = 'none';
-      lightboxContent.innerHTML = '';
+    function closeLightbox() { 
+      lightbox.style.display = 'none'; 
+      lightboxContent.innerHTML = ''; 
     }
 
     lightbox.addEventListener('click', function(e) {
