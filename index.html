@@ -1,3 +1,8 @@
+메인 화면의 버튼들 바로 위쪽에 눈에 잘 띄면서도 전체적인 디자인과 어울리는 **반투명한 라운드 박스 형태의 공지사항**을 추가했습니다.
+
+아래 코드를 복사해서 `index.html`에 덮어쓰기 해주세요!
+
+```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -6,46 +11,12 @@
   <title>KANG JINUK 포트폴리오</title>
   <style>
     /* 🌌 전체 배경색 */
-    body {
-      background: linear-gradient(to top, #000000 0%, #0a111a 50%, #1a365d 100%);
-      background-attachment: fixed;
-      background-size: cover;
-      color: white;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding: 0;
-      margin: 0;
-      min-height: 100vh;
-    }
+    body { background: linear-gradient(to top, #000000 0%, #0a111a 50%, #1a365d 100%); background-attachment: fixed; background-size: cover; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 0; margin: 0; min-height: 100vh; }
 
     /* 🖼️ 메인 웰컴 비주얼 영역 */
-    .main-intro {
-      position: relative;
-      width: 100%;
-      height: 40vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-      margin-bottom: 40px;
-    }
-
-    .main-intro-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 1;
-      filter: brightness(0.25) blur(2px);
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
+    .main-intro { position: relative; width: 100%; height: 40vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; overflow: hidden; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6); margin-bottom: 30px; }
+    .main-intro-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; filter: brightness(0.25) blur(2px); opacity: 0; transition: opacity 1s ease-in-out; }
     .main-intro-bg.active { opacity: 1; }
-
     .main-intro-text { position: relative; z-index: 2; padding: 20px; text-shadow: 0 4px 15px rgba(0,0,0,0.9); }
     .main-intro-text h1 { margin: 0 0 15px 0; font-size: 42px; letter-spacing: 3px; font-weight: 800; color: #ffffff; }
     .main-bio { font-size: 17px; color: #e2e8f0; margin: 0 auto 25px auto; font-weight: 400; letter-spacing: 0.5px; line-height: 1.7; max-width: 850px; word-break: keep-all; }
@@ -54,6 +25,25 @@
     .mini-warning { display: inline-block; background-color: rgba(211, 47, 47, 0.4); border: 1px solid rgba(255, 102, 102, 0.5); color: #ffd6d6; padding: 6px 16px; font-size: 13px; border-radius: 30px; backdrop-filter: blur(5px); }
 
     .portfolio-wrapper { max-width: 1200px; margin: 0 auto; padding: 0 40px 40px 40px; }
+    
+    /* 📢 공지사항 박스 스타일 */
+    .notice-box {
+      background-color: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 15px; /* 모서리 라운드 */
+      padding: 20px 30px;
+      margin-bottom: 35px;
+      text-align: center;
+      font-size: 17px;
+      color: #f8f9fa;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
+      letter-spacing: 0.5px;
+      line-height: 1.6;
+      word-break: keep-all;
+    }
+    .notice-box span { color: #a4c2ff; font-weight: bold; font-size: 18px; }
+
     .button-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 40px; }
     .cute-btn { padding: 16px 28px; font-size: 16px; font-weight: bold; color: white; border: none; border-radius: 50px; cursor: pointer; position: relative; top: 0; transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
     .cute-btn:hover { filter: brightness(1.1); }
@@ -109,6 +99,11 @@
   </div>
 
   <div class="portfolio-wrapper">
+    <!-- 📢 공지사항 박스 -->
+    <div class="notice-box">
+      📌 포트폴리오에 수록된 모든 이미지 및 영상은 <span>본인이 직접 제작한 작업물</span>입니다. 협업 작업은 포함하지 않았습니다.
+    </div>
+
     <div class="button-row" id="button-row"></div>
     <div id="galleries-wrapper"></div>
   </div>
@@ -144,17 +139,14 @@
     const lightbox = document.getElementById('lightbox');
     const lightboxContent = document.getElementById('lightbox-content');
     
-    // 글로벌 변수 복구
     let currentGallery = [];
     let currentIndex = 0;
     
-    // 스크롤 드래그 관련 변수
     let isDown = false;
     let startY;
     let scrollTop;
     let isDragged = false;
 
-    // 드래그 기능
     lightboxContent.addEventListener('mousedown', (e) => {
       if(e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') e.preventDefault(); 
       isDown = true;
@@ -173,7 +165,6 @@
       }
     });
 
-    // 슬라이드쇼용 이미지 리스트
     const allImages = [];
     portfolioData.forEach(section => {
       section.files.forEach(file => {
@@ -203,8 +194,6 @@
         s.files.forEach((f, idx) => {
             const item = document.createElement('div'); item.className = 'gallery-item';
             const isVid = f.toLowerCase().endsWith('.mp4');
-            
-            // 📌 오류 수정: 동영상(<video>) 태그에도 onclick 이벤트를 추가하고 마우스 커서 설정을 넣었습니다.
             item.innerHTML = `
               <div class="media-label">${isVid ? '🎥 [동영상]' : '🖼️ [이미지]'}</div>
               ${isVid ? `<video src="${s.folder+f}" muted loop style="cursor: pointer;" onclick="openLightbox(${JSON.stringify(s.files.map(x=>s.folder+x)).replace(/"/g,"'")}, ${idx})" onmouseover="this.play().catch(e=>{})" onmouseout="this.pause();this.currentTime=0;"></video>` 
@@ -217,7 +206,6 @@
         btn.onclick = () => { document.querySelectorAll('.cute-btn').forEach(b=>b.classList.remove('active')); document.querySelectorAll('.gallery-container').forEach(g=>g.classList.remove('active')); btn.classList.add('active'); gc.classList.add('active'); };
     });
 
-    // 📌 라이트박스 열기 및 업데이트 함수 (이미지 확대 버그 및 동영상 재생 오류 완벽 수정)
     function openLightbox(paths, index) { 
       currentGallery = paths; 
       currentIndex = index; 
@@ -233,6 +221,7 @@
 
       const src = currentGallery[currentIndex];
       const isVideo = src.toLowerCase().endsWith('.mp4');
+      const fileName = src.split('/').pop().toLowerCase();
 
       const infoText = document.createElement('div');
       infoText.className = 'lightbox-info';
@@ -251,11 +240,26 @@
         const img = document.createElement('img');
         img.src = src;
         img.style.userSelect = 'none';
-        
-        img.style.maxHeight = '85vh';
-        img.style.maxWidth = '100%';
-        img.style.cursor = 'zoom-in';
         img.style.transition = 'all 0.2s ease-in-out';
+
+        if (fileName.includes('g012')) {
+          img.style.maxHeight = 'none';
+          img.style.width = '90vw';
+          img.style.maxWidth = 'none';
+          img.style.cursor = 'zoom-out';
+          lightboxContent.style.alignItems = 'flex-start';
+        } else if (fileName.includes('g004') || fileName.includes('g011')) {
+          img.style.maxHeight = 'none';
+          img.style.width = '60vw';
+          img.style.maxWidth = 'none';
+          img.style.cursor = 'zoom-out';
+          lightboxContent.style.alignItems = 'flex-start';
+        } else {
+          img.style.maxHeight = '85vh';
+          img.style.maxWidth = '100%';
+          img.style.width = 'auto';
+          img.style.cursor = 'zoom-in';
+        }
 
         img.onclick = function(e) {
           e.stopPropagation(); 
@@ -264,11 +268,18 @@
           if (this.style.maxHeight === 'none') {
             this.style.maxHeight = '85vh';
             this.style.maxWidth = '100%';
+            this.style.width = 'auto';
             this.style.cursor = 'zoom-in';
             lightboxContent.style.alignItems = 'center'; 
           } else {
             this.style.maxHeight = 'none';
-            this.style.maxWidth = 'none'; 
+            if (fileName.includes('g012')) {
+              this.style.width = '90vw';
+            } else if (fileName.includes('g004') || fileName.includes('g011')) {
+              this.style.width = '60vw';
+            } else {
+              this.style.maxWidth = 'none'; 
+            }
             this.style.cursor = 'zoom-out';
             lightboxContent.style.alignItems = 'flex-start'; 
           }
@@ -301,3 +312,5 @@
   </script>
 </body>
 </html>
+
+```
