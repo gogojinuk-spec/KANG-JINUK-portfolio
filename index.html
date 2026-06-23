@@ -25,7 +25,7 @@
     .notice-box {
       background-color: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 15px; /* 모서리 라운드 */
+      border-radius: 15px; 
       padding: 20px 30px;
       margin-bottom: 35px;
       text-align: center;
@@ -74,6 +74,34 @@
     .close { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; z-index: 1000; }
     .arrow { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 50px; cursor: pointer; padding: 15px; user-select: none; z-index: 1000; }
     .arrow.left { left: 20px; } .arrow.right { right: 20px; }
+
+    /* 📱 스마트폰 모바일 최적화 */
+    @media (max-width: 768px) {
+      .main-intro { height: auto; padding: 60px 0 40px 0; }
+      .main-intro-text h1 { font-size: 26px; letter-spacing: 1px; }
+      .main-bio { font-size: 14px; padding: 0 10px; line-height: 1.6; }
+      .main-bio strong { font-size: 16px; margin-bottom: 5px; }
+      .contact-info { font-size: 13px; }
+      .mini-warning { font-size: 11px; padding: 5px 12px; }
+
+      .portfolio-wrapper { padding: 0 15px 30px 15px; }
+      .notice-box { font-size: 14px; padding: 15px; margin-bottom: 25px; }
+      .notice-box span { font-size: 15px; }
+
+      .button-row { gap: 10px; }
+      .cute-btn { padding: 12px; font-size: 13px; flex: 1 1 calc(50% - 10px); box-sizing: border-box; text-align: center; }
+
+      .gallery { grid-template-columns: repeat(2, 1fr); gap: 12px; } 
+      .project-intro { height: auto; min-height: 180px; padding: 15px; margin-bottom: 25px; border-radius: 12px; }
+      .intro-text { font-size: 14px; padding: 10px; }
+
+      .lightbox-info { font-size: 13px; padding: 5px 15px; margin-bottom: 10px; }
+      .close { top: 5px; right: 15px; font-size: 35px; }
+      .arrow { font-size: 30px; padding: 10px; }
+      .arrow.left { left: 0px; } .arrow.right { right: 0px; }
+      
+      #lightbox-content { padding-top: 10px; width: 100%; }
+    }
   </style>
 </head>
 <body>
@@ -94,7 +122,6 @@
   </div>
 
   <div class="portfolio-wrapper">
-    <!-- 📢 공지사항 박스 -->
     <div class="notice-box">
       📌 포트폴리오에 수록된 모든 이미지 및 영상은 <span>본인이 직접 제작한 작업물</span>입니다. 협업 작업은 포함하지 않았습니다.
     </div>
@@ -212,11 +239,13 @@
       lightboxContent.innerHTML = '';
       lightboxContent.scrollTop = 0;
       lightboxContent.scrollLeft = 0;
-      lightboxContent.style.alignItems = 'center'; 
+      lightboxContent.style.alignItems = 'center'; // 📌 상시 중앙 정렬 유지
 
       const src = currentGallery[currentIndex];
       const isVideo = src.toLowerCase().endsWith('.mp4');
       const fileName = src.split('/').pop().toLowerCase();
+      
+      const isMobile = window.innerWidth <= 768; 
 
       const infoText = document.createElement('div');
       infoText.className = 'lightbox-info';
@@ -228,8 +257,9 @@
         video.src = src;
         video.controls = true;
         video.autoplay = true;
-        video.style.maxHeight = '85vh';
+        video.style.maxHeight = isMobile ? 'none' : '85vh';
         video.style.maxWidth = '100%';
+        video.style.width = isMobile ? '100%' : 'auto';
         lightboxContent.appendChild(video);
       } else {
         const img = document.createElement('img');
@@ -237,48 +267,82 @@
         img.style.userSelect = 'none';
         img.style.transition = 'all 0.2s ease-in-out';
 
-        if (fileName.includes('g012')) {
+        if (isMobile) {
           img.style.maxHeight = 'none';
-          img.style.width = '90vw';
+          img.style.width = '100%'; 
           img.style.maxWidth = 'none';
-          img.style.cursor = 'zoom-out';
-          lightboxContent.style.alignItems = 'flex-start';
-        } else if (fileName.includes('g004') || fileName.includes('g011')) {
-          img.style.maxHeight = 'none';
-          img.style.width = '60vw';
-          img.style.maxWidth = 'none';
-          img.style.cursor = 'zoom-out';
-          lightboxContent.style.alignItems = 'flex-start';
-        } else {
-          img.style.maxHeight = '85vh';
-          img.style.maxWidth = '100%';
-          img.style.width = 'auto';
           img.style.cursor = 'zoom-in';
-        }
 
-        img.onclick = function(e) {
-          e.stopPropagation(); 
-          if (isDragged) { isDragged = false; return; }
-
-          if (this.style.maxHeight === 'none') {
-            this.style.maxHeight = '85vh';
-            this.style.maxWidth = '100%';
-            this.style.width = 'auto';
-            this.style.cursor = 'zoom-in';
-            lightboxContent.style.alignItems = 'center'; 
-          } else {
-            this.style.maxHeight = 'none';
-            if (fileName.includes('g012')) {
-              this.style.width = '90vw';
-            } else if (fileName.includes('g004') || fileName.includes('g011')) {
-              this.style.width = '60vw';
+          img.onclick = function(e) {
+            e.stopPropagation(); 
+            if (isDragged) { isDragged = false; return; }
+            if (this.style.width === '100%') {
+              this.style.width = '150%'; 
+              this.style.cursor = 'zoom-out';
             } else {
-              this.style.maxWidth = 'none'; 
+              this.style.width = '100%'; 
+              this.style.cursor = 'zoom-in';
             }
-            this.style.cursor = 'zoom-out';
-            lightboxContent.style.alignItems = 'flex-start'; 
+          };
+
+        } else {
+          // 📌 PC 환경: 이미지 가로 쏠림 현상 제거 (alignItems = 'center' 유지)
+          if (fileName.includes('g012')) {
+            img.style.maxHeight = 'none';
+            img.style.width = '60vw'; // 초기 상태 30% 축소
+            img.style.maxWidth = 'none';
+            img.style.cursor = 'zoom-in';
+          } else if (fileName.includes('g004') || fileName.includes('g011')) {
+            img.style.maxHeight = 'none';
+            img.style.width = '60vw';
+            img.style.maxWidth = 'none';
+            img.style.cursor = 'zoom-out';
+          } else {
+            img.style.maxHeight = '85vh';
+            img.style.maxWidth = '100%';
+            img.style.width = 'auto';
+            img.style.cursor = 'zoom-in';
           }
-        };
+
+          img.onclick = function(e) {
+            e.stopPropagation(); 
+            if (isDragged) { isDragged = false; return; }
+
+            if (fileName.includes('g012')) {
+              if (this.style.width === '60vw') {
+                this.style.width = '90vw'; // 클릭 시 가로 90% 확대
+                this.style.cursor = 'zoom-out';
+              } else {
+                this.style.width = '60vw'; 
+                this.style.cursor = 'zoom-in';
+              }
+            } else if (fileName.includes('g004') || fileName.includes('g011')) {
+              if (this.style.width === '60vw') {
+                this.style.maxHeight = '85vh';
+                this.style.width = 'auto';
+                this.style.maxWidth = '100%';
+                this.style.cursor = 'zoom-in';
+              } else {
+                this.style.maxHeight = 'none';
+                this.style.width = '60vw';
+                this.style.maxWidth = 'none';
+                this.style.cursor = 'zoom-out';
+              }
+            } else {
+              if (this.style.maxHeight === 'none') {
+                this.style.maxHeight = '85vh';
+                this.style.maxWidth = '100%';
+                this.style.width = 'auto';
+                this.style.cursor = 'zoom-in';
+              } else {
+                this.style.maxHeight = 'none';
+                this.style.width = 'auto';
+                this.style.maxWidth = 'none'; 
+                this.style.cursor = 'zoom-out';
+              }
+            }
+          };
+        }
         lightboxContent.appendChild(img);
       }
     }
