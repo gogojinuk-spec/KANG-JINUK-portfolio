@@ -89,7 +89,7 @@
       margin: 0 0 15px 0;
     }
 
-    /* 📌 간결해진 경고 문구 스타일 */
+    /* 경고 문구 스타일 */
     .mini-warning {
       display: inline-block;
       background-color: rgba(211, 47, 47, 0.4);
@@ -146,7 +146,9 @@
     #lightbox-content::-webkit-scrollbar { width: 10px; height: 10px; }
     #lightbox-content::-webkit-scrollbar-thumb { background-color: #666; border-radius: 10px; }
     .lightbox-info { color: #fff; font-size: 16px; font-weight: bold; margin-bottom: 15px; padding: 8px 20px; background-color: rgba(0,0,0,0.6); border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); letter-spacing: 1px; }
-    #lightbox-content img, #lightbox-content video { max-width: 100%; border-radius: 4px; display: inline-block; margin: 0 auto; }
+    
+    /* 📌 라이트박스 내 이미지 기본 설정 */
+    #lightbox-content img, #lightbox-content video { max-width: 100%; border-radius: 4px; display: inline-block; margin: 0 auto; user-select: none; -webkit-user-drag: none; }
     
     .close { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; z-index: 1000; }
     .arrow { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 50px; cursor: pointer; padding: 15px; user-select: none; z-index: 1000; }
@@ -164,10 +166,9 @@
       <div class="main-bio">
         <strong>Art Director · Illustrator · AI Creator</strong><br>
         생성형 AI와 전통 아트를 융합하여 독창적인 비주얼 콘텐츠를 제작합니다.<br>
-        ChatGPT와 Grok을 활용한 스토리 보드,영상콘티 제작, ComfyUI 기반 Stable Diffusion 워크플로우를 통한 이미지 제작, Seedance 2.0을 활용한 애니메이션 및 영상 연출을 수행하며, 수작업 드로잉과 아트 디렉션 역량을 바탕으로 프로젝트 전반의 크리에이티브를 이끌고 있습니다.
+        ChatGPT와 Grok을 활용한 스토리 설계, ComfyUI 기반 Stable Diffusion 워크플로우를 통한 이미지 제작, Seedance 2.0을 활용한 애니메이션 및 영상 연출을 수행하며, 수작업 드로잉과 아트 디렉션 역량을 바탕으로 프로젝트 전반의 크리에이티브를 이끌고 있습니다.
       </div>
       <p class="contact-info">📞 010-5514-5917 &nbsp;&nbsp;|&nbsp;&nbsp; ✉️ gogojinwook@naver.com</p>
-      <!-- 📌 짧아진 경고 문구 반영 -->
       <div class="mini-warning">🚨 안내: 고해상도 포트폴리오로 PC 추천. 모바일에서는 로딩 느릴 수 있습니다.</div>
     </div>
   </div>
@@ -190,23 +191,29 @@
         title: '1. 프로젝트 - 사립 저스티스 마법 학원',
         description: '이 프로젝트는 외주작업으로서 서브컬처 미소녀 작업물을 작업한 것입니다.<br>제가 AD 역할과 모든 아트 전반을 작업하였으며 동영상과 UI 디자인까지 맡았습니다.<br>이 프로젝트의 중점은 독창적인 서브컬처 세계관입니다.',
         folder: '1_Project _ Rival Schools United by Fate/',
-        files: ["G001.png", "G002.png", "G002_mov1.mp4", "G003.png", "G004.png", "G005.png", "G005_mov1.mp4", "G006.png", "G006_mov1.mp4", "G007.png", "G008.png", "G009.png", "G010.mp4", "G010_1.png", "G011.png", "G012.png", "G013.png", "G014.png", "G014_01.png", "G015.png", "G016.png", "G017.png", "G018.png", "G019.png"]
+        // 📌 여기서 이미지에 보이는 정확한 순서대로 파일 리스트가 업데이트되었습니다.
+        files: [
+          "G001.png", "G002.png", "G002_mov1.mp4", "G002_mov2.png", "G003.png", "G004.png", 
+          "G005.png", "G005_mov1.mp4", "G006.png", "g006_1.png", "G006_mov1.mp4", "G006_mov2.png",
+          "G007.png", "G009.png", "G010.mp4", "G010_1.png", "G011.png", "G012.png", "G013.png", 
+          "G014.png", "G014_01.png", "G015.png", "G016.png", "G017.png", "G018.png", "G019.png"
+        ]
       },
       {
         title: '2. 프로젝트 - R01',
-        description: '캐주얼 RPG 게임 프로젝트 R01(가제)의 아트 전반을 담당하였습니다.<br>키 비주얼, 캐릭터 디자인, 배경 아트 등 주요 비주얼 에셋을 직접 제작하였으며,<br>프로젝트의 아트 방향성 수립과 비주얼 퀄리티 향상을 주도하였습니다..',
+        description: '프로젝트 R01의 아트웍 및 컨셉 디자인 파트 가이드라인 작업물 아카이브입니다.',
         folder: '2_Project _ R01/',
         files: ["0001.png", "0002.png", "0003.png", "0004.png", "0005.png", "0006.png", "0007.png", "0008.png", "0009.png", "0010.png", "0011.jpg", "0012.png", "0013.png", "0014.png", "0015.png", "0016.png", "0017.png", "0018.png", "0019.png", "0020.png"]
       },
       {
         title: '3. 캐주얼 스타일 아트 작업',
-        description: '본 포트폴리오의 작업물은 AI를 사용하지 않고 모두 수작업으로 제작되었습니다.<br>컴투스, 아이덴티티게임즈, 디테일게임즈 등에서 참여한 프로젝트의 아트 작업물을 수록하였으며,<br> 주로 캐주얼 게임 분야의 캐릭터, 배경, UI 디자인 작업으로 구성되어 있습니다.',
+        description: '캐주얼 작업물. 본 포트폴리오는 AI 생성물 없이 제작된 순수 수작업 작품들로 구성되어 있습니다.',
         folder: '3_CSUAL ART/',
         files: ["c001.jpg", "c002.png", "c003.png", "c005.jpg", "c006.jpg", "c007.jpg", "c008.jpg", "c009.png", "c010.jpg", "c011.jpg", "c012.jpg", "c013.jpg", "c014.jpg", "c015.png", "d001.jpg", "d002.jpg", "d003.jpg", "d004.jpg", "d005.jpg", "d006.png", "d007.jpg", "d008.jpg", "d009.jpg", "d010.png", "d011.jpg", "d012.jpg", "d013.jpg", "d014.jpg", "d015.png", "d016.jpg", "d017.png", "d018.jpg", "d019.jpg", "d020.png", "d021.png", "d022.png", "d023.jpg", "d024.png", "d025.png", "d026.png", "d027.jpg", "d028.png", "d029.jpg"]
       },
       {
         title: '4. 리얼 스타일 아트 작업',
-        description: '깊이감 있는 질감 처리와 정교한 묘사가 돋보이는 고해상도 리얼 아트를 모았습니다.',
+        description: '리얼 아트를: 본 포트폴리오는 AI 생성물 없이 제작된 순수 수작업 작품들로 구성되어 있습니다.',
         folder: '4_REAL ART/',
         files: ["K001.jpg", "K002.png", "K003.jpg", "K004.jpg", "K005.jpg", "K006.jpg", "K007.jpg", "K008.jpg", "K009.jpg", "K010.jpg", "K011.jpg", "K012.jpg", "K013.png", "K014.png", "K015.jpg", "K016.jpg", "K017.png", "K018.png", "K019.jpg", "K020.jpg", "K021.png", "K022.png", "K023.png", "K024.png", "K025.png", "K026.jpg", "K027.png"]
       },
@@ -220,18 +227,43 @@
 
     const buttonRow = document.getElementById('button-row');
     const galleriesWrapper = document.getElementById('galleries-wrapper');
-
     let currentGallery = [];
     let currentIndex = 0;
     const lightbox = document.getElementById('lightbox');
     const lightboxContent = document.getElementById('lightbox-content');
 
+    // 📌 마우스 드래그로 화면 위아래 스크롤하기
+    let isDown = false;
+    let startY;
+    let scrollTop;
+    let isDragged = false;
+
+    lightboxContent.addEventListener('mousedown', (e) => {
+      if(e.target.tagName === 'IMG') e.preventDefault(); 
+      isDown = true;
+      isDragged = false;
+      startY = e.clientY;
+      scrollTop = lightboxContent.scrollTop;
+    });
+
+    lightboxContent.addEventListener('mouseleave', () => { isDown = false; });
+    lightboxContent.addEventListener('mouseup', () => { isDown = false; });
+
+    lightboxContent.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      const y = e.clientY;
+      const walk = (y - startY);
+      if (Math.abs(walk) > 3) { 
+        isDragged = true;
+        lightboxContent.scrollTop = scrollTop - walk;
+      }
+    });
+
+    // 메인 배경화면 랜덤 슬라이드
     const allImages = [];
     portfolioData.forEach(section => {
       section.files.forEach(file => {
-        if (!file.endsWith('.mp4')) {
-          allImages.push(section.folder + file);
-        }
+        if (!file.endsWith('.mp4')) allImages.push(section.folder + file);
       });
     });
 
@@ -239,9 +271,7 @@
       const bg1 = document.getElementById('bg1');
       const bg2 = document.getElementById('bg2');
       let isBg1Active = true;
-
       const getRandomImage = () => allImages[Math.floor(Math.random() * allImages.length)];
-
       bg1.src = getRandomImage();
       bg2.src = getRandomImage();
 
@@ -362,18 +392,29 @@
         el.autoplay = true;
         el.style.maxHeight = '85vh';
       } else {
-        el.style.cursor = 'zoom-in'; 
         el.onload = function() {
           const ratio = this.naturalHeight / this.naturalWidth;
-          if (ratio >= 5) {
+          
+          if (ratio >= 2 || src.includes('g006_1.png')) {
             this.style.maxHeight = 'none';
-            this.style.cursor = 'default';
+            this.style.cursor = 'grab';
+            
+            this.onmousedown = () => this.style.cursor = 'grabbing';
+            this.onmouseup = () => this.style.cursor = 'grab';
+            this.onmouseleave = () => this.style.cursor = 'grab';
+            
+            this.onclick = function(e) {
+              e.stopPropagation();
+            };
           } else {
             this.style.maxHeight = '85vh';
             this.style.objectFit = 'contain';
+            this.style.cursor = 'zoom-in';
             
             this.onclick = function(e) {
-              e.stopPropagation(); 
+              e.stopPropagation();
+              if (isDragged) { isDragged = false; return; }
+              
               if (this.style.maxHeight === 'none') {
                 this.style.maxHeight = '85vh';
                 this.style.cursor = 'zoom-in';
