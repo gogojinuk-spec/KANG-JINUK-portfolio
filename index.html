@@ -22,21 +22,7 @@
     .portfolio-wrapper { max-width: 1200px; margin: 0 auto; padding: 0 40px 40px 40px; }
     
     /* 📢 공지사항 박스 스타일 */
-    .notice-box {
-      background-color: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 15px; 
-      padding: 20px 30px;
-      margin-bottom: 35px;
-      text-align: center;
-      font-size: 17px;
-      color: #f8f9fa;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-      backdrop-filter: blur(10px);
-      letter-spacing: 0.5px;
-      line-height: 1.6;
-      word-break: keep-all;
-    }
+    .notice-box { background-color: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 15px; padding: 20px 30px; margin-bottom: 35px; text-align: center; font-size: 17px; color: #f8f9fa; box-shadow: 0 6px 20px rgba(0,0,0,0.2); backdrop-filter: blur(10px); letter-spacing: 0.5px; line-height: 1.6; word-break: keep-all; }
     .notice-box span { color: #a4c2ff; font-weight: bold; font-size: 18px; }
 
     .button-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 40px; }
@@ -66,10 +52,10 @@
     .click-notice { margin-top: 12px; font-size: 13px; color: #9ab; font-weight: bold; }
 
     .lightbox { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; }
-    #lightbox-content { width: 90%; max-height: 90vh; overflow: auto; text-align: center; display: flex; flex-direction: column; align-items: center; padding-top: 20px; }
+    .lightbox.active { display: flex; }
+    #lightbox-content { width: 90%; max-height: 90vh; overflow: auto; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
     #lightbox-content::-webkit-scrollbar { width: 10px; height: 10px; }
     #lightbox-content::-webkit-scrollbar-thumb { background-color: #666; border-radius: 10px; }
-    .lightbox-info { color: #fff; font-size: 16px; font-weight: bold; margin-bottom: 15px; padding: 8px 20px; background-color: rgba(0,0,0,0.6); border-radius: 8px; border: 1px solid rgba(255,255,255,0.3); letter-spacing: 1px; flex-shrink: 0; }
     
     .close { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; z-index: 1000; }
     .arrow { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 50px; cursor: pointer; padding: 15px; user-select: none; z-index: 1000; }
@@ -95,12 +81,11 @@
       .project-intro { height: auto; min-height: 180px; padding: 15px; margin-bottom: 25px; border-radius: 12px; }
       .intro-text { font-size: 14px; padding: 10px; }
 
-      .lightbox-info { font-size: 13px; padding: 5px 15px; margin-bottom: 10px; }
       .close { top: 5px; right: 15px; font-size: 35px; }
       .arrow { font-size: 30px; padding: 10px; }
       .arrow.left { left: 0px; } .arrow.right { right: 0px; }
       
-      #lightbox-content { padding-top: 10px; width: 100%; }
+      #lightbox-content { width: 100%; }
     }
   </style>
 </head>
@@ -141,7 +126,7 @@
     const portfolioData = [
       {
         title: '1. 프로젝트 - 사립 저스티스 마법 학원',
-        description: '이 프로젝트는 외주작업으로서 서브컬처 미소녀 작업물을 작업한 것입니다.<br>제가 AD 역할과 모든 아트 전반을 작업하였으며 동영상과 UI 디자인까지 맡았습니다.',
+        description: '이 프로젝트는 서브컬처 미소녀 작업물을 작업한 것입니다.<br>제가 AD 역할과 모든 아트 전반을 작업하였으며 동영상과 UI 디자인까지 맡았습니다.',
         folder: '1_Project _ Rival Schools United by Fate/',
         files: ["G000.jpg", "G001.jpg", "G002.jpg", "G003.mp4", "G004.jpg", "G005.jpg", "G006.jpg", "G007.jpg", "G008.mp4", "G009.jpg", "G010.mp4", "G011.jpg", "G012.jpg", "G013.jpg", "G014.jpg", "G015.jpg", "G016.jpg", "G017.jpg", "G018.jpg", "G019.jpg", "G020.jpg", "g021.jpg", "G022.jpg", "G023.jpg"]
       },
@@ -164,11 +149,37 @@
     let currentGallery = [];
     let currentIndex = 0;
     
+    // PC 마우스 드래그 스크롤 변수
     let isDown = false;
     let startY;
     let scrollTop;
     let isDragged = false;
 
+    // 모바일 스와이프 관련 변수
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    // 모바일 좌우 스와이프 이벤트 리스너 추가
+    lightboxContent.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    lightboxContent.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, {passive: true});
+
+    function handleSwipe() {
+      const swipeThreshold = 50; // 이 픽셀 수치 이상 밀어야 스와이프 인정
+      if (touchEndX < touchStartX - swipeThreshold) {
+        changeMedia(1); // 왼쪽으로 밀기 (다음 작품)
+      }
+      if (touchEndX > touchStartX + swipeThreshold) {
+        changeMedia(-1); // 오른쪽으로 밀기 (이전 작품)
+      }
+    }
+
+    // 마우스 드래그 기능
     lightboxContent.addEventListener('mousedown', (e) => {
       if(e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') e.preventDefault(); 
       isDown = true;
@@ -239,7 +250,7 @@
       lightboxContent.innerHTML = '';
       lightboxContent.scrollTop = 0;
       lightboxContent.scrollLeft = 0;
-      lightboxContent.style.alignItems = 'center'; // 📌 상시 중앙 정렬 유지
+      lightboxContent.style.alignItems = 'center'; 
 
       const src = currentGallery[currentIndex];
       const isVideo = src.toLowerCase().endsWith('.mp4');
@@ -247,10 +258,7 @@
       
       const isMobile = window.innerWidth <= 768; 
 
-      const infoText = document.createElement('div');
-      infoText.className = 'lightbox-info';
-      infoText.innerText = isVideo ? '▶️ [Video]' : '🟥 [Image]';    
-      lightboxContent.appendChild(infoText);
+      // 📌 삭제됨: infoText ( [Video] / [Image] 표시 )
 
       if(isVideo) {
         const video = document.createElement('video');
@@ -286,10 +294,9 @@
           };
 
         } else {
-          // 📌 PC 환경: 이미지 가로 쏠림 현상 제거 (alignItems = 'center' 유지)
           if (fileName.includes('g012')) {
             img.style.maxHeight = 'none';
-            img.style.width = '60vw'; // 초기 상태 30% 축소
+            img.style.width = '60vw'; 
             img.style.maxWidth = 'none';
             img.style.cursor = 'zoom-in';
           } else if (fileName.includes('g004') || fileName.includes('g011')) {
@@ -310,7 +317,7 @@
 
             if (fileName.includes('g012')) {
               if (this.style.width === '60vw') {
-                this.style.width = '90vw'; // 클릭 시 가로 90% 확대
+                this.style.width = '90vw'; 
                 this.style.cursor = 'zoom-out';
               } else {
                 this.style.width = '60vw'; 
