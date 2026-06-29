@@ -53,9 +53,10 @@
 
     .lightbox { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); justify-content: center; align-items: center; }
     .lightbox.active { display: flex; }
-    #lightbox-content { width: 90%; max-height: 90vh; overflow: auto; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    #lightbox-content::-webkit-scrollbar { width: 10px; height: 10px; }
-    #lightbox-content::-webkit-scrollbar-thumb { background-color: #666; border-radius: 10px; }
+    /* 확대 시 넓은 스크롤 반경 확보를 위해 100% 로 수정 */
+    #lightbox-content { width: 100%; height: 100%; overflow: auto; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
+    #lightbox-content::-webkit-scrollbar { width: 12px; height: 12px; }
+    #lightbox-content::-webkit-scrollbar-thumb { background-color: #666; border-radius: 10px; border: 3px solid rgba(0,0,0,0); background-clip: padding-box; }
     
     .close { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; z-index: 1000; }
     .arrow { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 50px; cursor: pointer; padding: 15px; user-select: none; z-index: 1000; }
@@ -85,7 +86,7 @@
       .arrow { font-size: 30px; padding: 10px; }
       .arrow.left { left: 0px; } .arrow.right { right: 0px; }
       
-      #lightbox-content { width: 100%; }
+      #lightbox-content { padding: 0; }
     }
   </style>
 </head>
@@ -128,7 +129,7 @@
         title: '1. 프로젝트 - 사립 저스티스 마법 학원',
         description: '이 프로젝트는 서브컬처 미소녀 작업물을 작업한 것입니다.<br>제가 AD 역할과 모든 아트 전반을 작업하였으며 동영상과 UI 디자인까지 맡았습니다.',
         folder: '1_Project _ Rival Schools United by Fate/',
-        files: ["G000.jpg", "G001.jpg", "G002.jpg", "G003.mp4", "G004.jpg", "G005.jpg", "G006.jpg", "G007.jpg", "G008.mp4", "G009.jpg", "G010.mp4", "G011.jpg", "G012.jpg", "G013.jpg", "G014.jpg", "G015.jpg", "G016.jpg", "G017.jpg", "G018.jpg", "G019.jpg", "G020.jpg", "g021.jpg", "G022.jpg", "G023.jpg"]
+        files: ["G000.jpg", "G001.jpg", "G001_1.jpg", "G001_2.mp4", "G001_3.jpg", "G001_4.jpg", "G002.jpg", "G003.mp4", "G004.jpg", "G005.jpg", "G006.jpg", "G007.jpg", "G008.mp4", "G009.jpg", "G010.mp4", "G011.jpg", "G012.jpg", "G013.jpg", "G014.jpg", "G015.jpg", "G016.jpg", "G017.jpg", "G018.jpg", "G019.jpg", "G020.jpg", "g021.jpg", "G022.jpg", "G023.jpg"]
       },
       {
         title: '2. 프로젝트 - R01',
@@ -149,10 +150,10 @@
     let currentGallery = [];
     let currentIndex = 0;
     
-    // PC 마우스 드래그 스크롤 변수
+    // PC 마우스 좌우/상하 드래그 스크롤 변수
     let isDown = false;
-    let startY;
-    let scrollTop;
+    let startY, startX;
+    let scrollTop, scrollLeft;
     let isDragged = false;
 
     // 모바일 스와이프 관련 변수
@@ -170,31 +171,33 @@
     }, {passive: true});
 
     function handleSwipe() {
-      const swipeThreshold = 50; // 이 픽셀 수치 이상 밀어야 스와이프 인정
-      if (touchEndX < touchStartX - swipeThreshold) {
-        changeMedia(1); // 왼쪽으로 밀기 (다음 작품)
-      }
-      if (touchEndX > touchStartX + swipeThreshold) {
-        changeMedia(-1); // 오른쪽으로 밀기 (이전 작품)
-      }
+      const swipeThreshold = 50; 
+      if (touchEndX < touchStartX - swipeThreshold) { changeMedia(1); }
+      if (touchEndX > touchStartX + swipeThreshold) { changeMedia(-1); }
     }
 
-    // 마우스 드래그 기능
+    // 마우스 드래그 기능 (상하좌우 모두 지원)
     lightboxContent.addEventListener('mousedown', (e) => {
       if(e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') e.preventDefault(); 
       isDown = true;
       isDragged = false;
       startY = e.clientY;
+      startX = e.clientX;
       scrollTop = lightboxContent.scrollTop;
+      scrollLeft = lightboxContent.scrollLeft;
     });
     lightboxContent.addEventListener('mouseleave', () => { isDown = false; });
     lightboxContent.addEventListener('mouseup', () => { isDown = false; });
     lightboxContent.addEventListener('mousemove', (e) => {
       if (!isDown) return;
-      const walk = (e.clientY - startY);
-      if (Math.abs(walk) > 3) { 
+      const walkY = (e.clientY - startY);
+      const walkX = (e.clientX - startX);
+      
+      // 약간만 움직여도 드래그로 판정하여 스크롤 이동
+      if (Math.abs(walkY) > 3 || Math.abs(walkX) > 3) { 
         isDragged = true;
-        lightboxContent.scrollTop = scrollTop - walk;
+        lightboxContent.scrollTop = scrollTop - walkY;
+        lightboxContent.scrollLeft = scrollLeft - walkX;
       }
     });
 
@@ -230,7 +233,7 @@
             item.innerHTML = `
               <div class="media-label">${isVid ? '▶️ [Video]' : '🟥 [Image]'}</div>
               ${isVid ? `<video src="${s.folder+f}" muted loop style="cursor: pointer;" onclick="openLightbox(${JSON.stringify(s.files.map(x=>s.folder+x)).replace(/"/g,"'")}, ${idx})" onmouseover="this.play().catch(e=>{})" onmouseout="this.pause();this.currentTime=0;"></video>` 
-                      : `<img src="${s.folder+f}" onclick="openLightbox(${JSON.stringify(s.files.map(x=>s.folder+x)).replace(/"/g,"'")}, ${idx})">`}
+                      : `<img src="${s.folder+f}" loading="lazy" onclick="openLightbox(${JSON.stringify(s.files.map(x=>s.folder+x)).replace(/"/g,"'")}, ${idx})">`}
               <div class="click-notice">${isVid ? ' Video ' : '   '}</div>
             `;
             grid.appendChild(item);
@@ -250,15 +253,15 @@
       lightboxContent.innerHTML = '';
       lightboxContent.scrollTop = 0;
       lightboxContent.scrollLeft = 0;
+      
+      // 초기에는 화면 중앙 정렬 유지
       lightboxContent.style.alignItems = 'center'; 
+      lightboxContent.style.justifyContent = 'center'; 
 
       const src = currentGallery[currentIndex];
       const isVideo = src.toLowerCase().endsWith('.mp4');
-      const fileName = src.split('/').pop().toLowerCase();
       
       const isMobile = window.innerWidth <= 768; 
-
-      // 📌 삭제됨: infoText ( [Video] / [Image] 표시 )
 
       if(isVideo) {
         const video = document.createElement('video');
@@ -274,79 +277,72 @@
         img.src = src;
         img.style.userSelect = 'none';
         img.style.transition = 'all 0.2s ease-in-out';
+        img.style.margin = 'auto'; // 화면보다 작을 때는 무조건 중앙
 
         if (isMobile) {
+          // 모바일: 꽉 찬 화면 유지 및 클릭 시 줌
           img.style.maxHeight = 'none';
           img.style.width = '100%'; 
           img.style.maxWidth = 'none';
           img.style.cursor = 'zoom-in';
+          let isZoomedMobile = false;
 
           img.onclick = function(e) {
             e.stopPropagation(); 
             if (isDragged) { isDragged = false; return; }
-            if (this.style.width === '100%') {
-              this.style.width = '150%'; 
+            
+            if (!isZoomedMobile) {
+              this.style.width = '200%'; // 원본보다 더 크게 확대
+              lightboxContent.style.alignItems = 'flex-start'; // 확대 시 스크롤 잘림 방지
+              lightboxContent.style.justifyContent = 'flex-start';
               this.style.cursor = 'zoom-out';
+              isZoomedMobile = true;
             } else {
               this.style.width = '100%'; 
+              lightboxContent.style.alignItems = 'center';
+              lightboxContent.style.justifyContent = 'center';
               this.style.cursor = 'zoom-in';
+              isZoomedMobile = false;
             }
           };
 
         } else {
-          if (fileName.includes('g012')) {
-            img.style.maxHeight = 'none';
-            img.style.width = '60vw'; 
-            img.style.maxWidth = 'none';
-            img.style.cursor = 'zoom-in';
-          } else if (fileName.includes('g004') || fileName.includes('g011')) {
-            img.style.maxHeight = 'none';
-            img.style.width = '60vw';
-            img.style.maxWidth = 'none';
-            img.style.cursor = 'zoom-out';
-          } else {
-            img.style.maxHeight = '85vh';
-            img.style.maxWidth = '100%';
-            img.style.width = 'auto';
-            img.style.cursor = 'zoom-in';
-          }
+          // PC: 처음에 화면에 쏙 맞게 (비율 유지)
+          img.style.maxHeight = '85vh';
+          img.style.maxWidth = '100%';
+          img.style.width = 'auto';
+          img.style.objectFit = 'contain';
+          img.style.cursor = 'zoom-in';
+          let isZoomed = false;
 
           img.onclick = function(e) {
             e.stopPropagation(); 
             if (isDragged) { isDragged = false; return; }
 
-            if (fileName.includes('g012')) {
-              if (this.style.width === '60vw') {
-                this.style.width = '90vw'; 
-                this.style.cursor = 'zoom-out';
-              } else {
-                this.style.width = '60vw'; 
-                this.style.cursor = 'zoom-in';
-              }
-            } else if (fileName.includes('g004') || fileName.includes('g011')) {
-              if (this.style.width === '60vw') {
-                this.style.maxHeight = '85vh';
-                this.style.width = 'auto';
-                this.style.maxWidth = '100%';
-                this.style.cursor = 'zoom-in';
-              } else {
-                this.style.maxHeight = 'none';
-                this.style.width = '60vw';
-                this.style.maxWidth = 'none';
-                this.style.cursor = 'zoom-out';
-              }
+            if (!isZoomed) {
+              // 돋보기(확대) 모드 : 모든 크기 제한을 풀어서 원본 비율대로 확대
+              this.style.maxHeight = 'none';
+              this.style.maxWidth = 'none';
+              this.style.width = 'auto'; 
+              
+              // 💡 핵심 수정: Flexbox의 강제 중앙 정렬을 풀어주어 스크롤이 끝까지 가도록 만듦
+              lightboxContent.style.alignItems = 'flex-start';
+              lightboxContent.style.justifyContent = 'flex-start';
+              
+              this.style.cursor = 'zoom-out';
+              isZoomed = true;
             } else {
-              if (this.style.maxHeight === 'none') {
-                this.style.maxHeight = '85vh';
-                this.style.maxWidth = '100%';
-                this.style.width = 'auto';
-                this.style.cursor = 'zoom-in';
-              } else {
-                this.style.maxHeight = 'none';
-                this.style.width = 'auto';
-                this.style.maxWidth = 'none'; 
-                this.style.cursor = 'zoom-out';
-              }
+              // 다시 원상복구
+              this.style.maxHeight = '85vh';
+              this.style.maxWidth = '100%';
+              this.style.width = 'auto';
+              
+              // 다시 중앙 정렬로 복귀
+              lightboxContent.style.alignItems = 'center';
+              lightboxContent.style.justifyContent = 'center';
+              
+              this.style.cursor = 'zoom-in';
+              isZoomed = false;
             }
           };
         }
